@@ -1,14 +1,9 @@
-import { Router } from "express";
-import { StatusCodes } from "http-status-codes";
+import { Router } from 'express';
+import { PokemonController } from './../controllers/index';
 
 const router = Router();
 
-router.get("/", (req, res) => {
-    return res.json("Vissoto");
-});
-
-router.get("/:id", (req, res) => {
-    return res.status(StatusCodes.OK).json("Vissoto");
-});
+router.get('/', PokemonController.get);
+router.get('/getall', PokemonController.getAll);
 
 export { router };
