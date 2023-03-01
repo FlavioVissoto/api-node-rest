@@ -1,8 +1,14 @@
 import { number, object, ObjectSchema } from 'yup';
 
+import { validation } from '../../../shared/middleware';
 import { GetAllRequest } from '../request/get-all.request';
 
-export const GetAllValidation: ObjectSchema<GetAllRequest> = object().shape({
+const getAllValidation: ObjectSchema<GetAllRequest> = object().shape({
   limit: number().required(),
   offset: number().optional(),
+});
+
+export const GetAllValidation = validation({
+  body: getAllValidation,
+  query: getAllValidation,
 });

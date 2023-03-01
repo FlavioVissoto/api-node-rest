@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { PokemonController } from './../controllers/index';
+import { PokemonController } from './../controllers';
 
 const router = Router();
 
 router.get('/', PokemonController.get);
-router.get('/getall', PokemonController.getAll);
+router.post('/getall', PokemonController.GetAllValidation, PokemonController.getAll);
 
 export { router };
