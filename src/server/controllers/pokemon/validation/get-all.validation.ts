@@ -9,6 +9,5 @@ const getAllValidation: ObjectSchema<GetAllRequest> = object().shape({
 });
 
 export const GetAllValidation = validation({
-  body: getAllValidation,
   query: getAllValidation,
 });
