@@ -1,3 +1,7 @@
 declare module 'knex/types/tables' {
-  interface Tables {}
+  interface Tables {
+    // hotsite: Hotsite;
+    // stories: Stories;
+    // noticias: Noticias;
+  }
 }
