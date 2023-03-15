@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema
     .createTable(TableName.plataforma, (table) => {
       table.bigIncrements('id').primary().index();
-      table.string('nm_platform', 150);
+      table.string('nm_platform', 150).checkLength('<=', 150).notNullable();
     })
     .then(() => {
       console.log(`### Create table ${TableName.plataforma}`);

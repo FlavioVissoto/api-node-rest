@@ -1,5 +1,5 @@
-import * as getPlatforms from './platform.services';
+import * as platforms from './platform.services';
 
 export const PlatformServices = {
-  ...getPlatforms,
+  ...platforms,
 };

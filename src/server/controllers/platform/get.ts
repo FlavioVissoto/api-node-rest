@@ -19,6 +19,14 @@ export const GetValidation = validation({
 });
 
 export const Get = async (req: Request<{}, {}, {}, PlatformRequest>, res: Response) => {
-  const result = await PlatformServices.getPlatforms();
+  const result = await PlatformServices.getAll();
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  }
   return res.status(StatusCodes.OK).json(result);
 };
