@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { Knex } from './server/database/knex/index';
 import { server } from './server/server';
 
@@ -13,9 +14,20 @@ if (process.env.IS_LOCALHOST !== 'true') {
   Knex.migrate
     .latest()
     .then(() => {
-      startServer();
+      Knex.seed
+        .run()
+        .then(() => {
+          startServer();
+        })
+        .catch((e) => {
+          console.log('Erro ao rodar Seeds.');
+          console.log(chalk.red(e));
+        });
     })
-    .catch(console.log);
+    .catch((e) => {
+      console.log('Erro ao rodar Migrations.');
+      console.log(chalk.red(e));
+    });
 } else {
   startServer();
 }

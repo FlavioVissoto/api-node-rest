@@ -1,6 +1,6 @@
 export enum TableName {
-  hotsite = 'tb_hotsite',
-  platforma = 'tb_platforma',
-  stories = 'tb_stories',
-  noticias = 'tb_noticias',
+  hotsite = 'TB_HOTSITE',
+  platforma = 'TB_PLATFORMA',
+  stories = 'TB_STORIES',
+  noticias = 'TB_NOTICIAS',
 }

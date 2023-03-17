@@ -18,13 +18,12 @@ export const getAllWithPagination = async (page: number, limit: number, filter: 
   }
 };
 
-export const getAll = async (): Promise<Platform[]> => {
-  const result: Platform[] = [];
-
-  result.push({ id: 1, nm_platform: 'android' });
-  result.push({ id: 2, nm_platform: 'ios' });
-  result.push({ id: 3, nm_platform: 'web' });
-  return result;
+export const getAll = async (): Promise<Platform[] | Error> => {
+  try {
+    return await Knex(TableName.platforma).select('*');
+  } catch (error) {
+    return new Error('Erro ao consultar registro.');
+  }
 };
 
 export const get = async (id: number): Promise<Platform | Error> => {
