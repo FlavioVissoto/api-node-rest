@@ -3,7 +3,7 @@ import { Hotsite, Platform } from './../../models';
 declare module 'knex/types/tables' {
   interface Tables {
     hotsite: Hotsite;
-    platform: Platform;
+    tb_platforma: Platform;
     // stories: Stories;
     // noticias: Noticias;
   }

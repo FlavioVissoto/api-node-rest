@@ -3,17 +3,17 @@ import { TableName } from '../tablename';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema
-    .createTable(TableName.plataforma, (table) => {
+    .createTable(TableName.platforma, (table) => {
       table.bigIncrements('id').primary().index();
       table.string('nm_platform', 150).checkLength('<=', 150).notNullable();
     })
     .then(() => {
-      console.log(`### Create table ${TableName.plataforma}`);
+      console.log(`### Create table ${TableName.platforma}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable(TableName.plataforma).then(() => {
-    console.log(`### Drop table ${TableName.plataforma}`);
+  return knex.schema.dropTable(TableName.platforma).then(() => {
+    console.log(`### Drop table ${TableName.platforma}`);
   });
 }
