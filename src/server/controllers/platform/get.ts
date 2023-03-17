@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { Platform } from '../../database/models';
 import { PlatformRequest } from '../../entity/contracts/request/platform';
 import { validation } from '../../shared/middleware';
-import { PlatformServices } from '../../shared/services/platform';
+import { PlatformProvider } from './../../database/providers/platform/index';
 
 interface BodyProps extends Omit<Platform, 'id'> {}
 
@@ -19,7 +19,7 @@ export const GetValidation = validation({
 });
 
 export const Get = async (req: Request<{}, {}, {}, PlatformRequest>, res: Response) => {
-  const result = await PlatformServices.getAll();
+  const result = await PlatformProvider.getAll();
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
