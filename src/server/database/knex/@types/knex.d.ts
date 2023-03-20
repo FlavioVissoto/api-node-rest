@@ -1,10 +1,10 @@
-import { Hotsite, Platform } from './../../models';
+import { Hotsite, Platform, User, UserStatus } from './../../models';
 
 declare module 'knex/types/tables' {
   interface Tables {
     hotsite: Hotsite;
     TB_PLATFORMA: Platform;
-    // stories: Stories;
-    // noticias: Noticias;
+    TB_USER: User;
+    TB_USER_STATUS: UserStatus;
   }
 }

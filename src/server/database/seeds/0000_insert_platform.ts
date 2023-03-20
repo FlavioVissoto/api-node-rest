@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { Knex } from 'knex';
-import { Platform } from './../models/platform';
-import { TableName } from './../tablename';
+import { Platform } from '../models/platform.model';
+import { TableName } from '../tablename';
 
 export const seed = async (knex: Knex) => {
   //await knex(TableName.platforma).insert({ nm_platform: '' });
