@@ -9,13 +9,13 @@ import { validation } from '../../shared/middleware';
 interface BodyProps extends Omit<User, 'id'> {}
 
 const bodyValidation: ObjectSchema<BodyProps> = object().shape({
-  name: string().required().min(5).email(),
-  email: string().required().min(5).email(),
-  pass: string().required().min(6),
-  status: number().required(),
+  cd_status: number().required(),
+  nm_user: string().required().min(5),
+  nm_email: string().required().min(5).email(),
+  nm_pass: string().required().min(6),
 });
 
-export const getAllValidation = validation({
+export const getAllValidationSignUp = validation({
   body: bodyValidation,
 });
 

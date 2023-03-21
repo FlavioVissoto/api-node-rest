@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
       table.integer('cd_status').index().notNullable();
       table.string('nm_user').notNullable().checkLength('>', 3);
       table.string('nm_email').index().unique().notNullable().checkLength('>', 5);
-      table.string('nm_pass').notNullable().checkLength('>', 6);
+      table.string('nm_pass').notNullable().checkLength('>=', 6);
     })
     .then(() => {
       console.log(chalk.green(`### Create table ${TableName.user}`));

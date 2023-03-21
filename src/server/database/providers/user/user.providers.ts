@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { Knex } from '../../knex';
 import { TableName } from '../../tablename';
 import { User } from './../../models/user.model';
@@ -24,9 +25,9 @@ export const get = async (id: number): Promise<User | Error> => {
 
 export const getByEmail = async (email: string): Promise<User | Error> => {
   try {
-    const result = await Knex(TableName.user).select('*').where('email', '=', email).first();
+    const result = await Knex(TableName.user).select('*').where('nm_email', '=', email).first();
     if (result) {
-      result;
+      return result;
     }
     return new Error(`Registro não encontrado para o e-mail: ${email}`);
   } catch (error) {
@@ -38,7 +39,7 @@ export const getByEmailAndPass = async (email: string, pass: string): Promise<Us
   try {
     const result = await Knex(TableName.user).select('*').where('email', '=', email).andWhere('pass', '=', pass).first();
     if (result) {
-      result;
+      return result;
     }
     return new Error(`Registro não encontrado para o e-mail: ${email}`);
   } catch (error) {
@@ -48,6 +49,11 @@ export const getByEmailAndPass = async (email: string, pass: string): Promise<Us
 
 export const create = async (params: Omit<User, 'id'>): Promise<number | Error> => {
   try {
+    const validateEmail = await getByEmail(params.nm_email);
+    if (validateEmail instanceof Error && validateEmail.message != `Registro não encontrado para o e-mail: ${params.nm_email}`) {
+      return new Error('E-mail já existente');
+    }
+
     const [result] = await Knex(TableName.user).insert(params).returning('id');
     if (typeof result === 'object') {
       return result.id;
@@ -56,6 +62,7 @@ export const create = async (params: Omit<User, 'id'>): Promise<number | Error> 
     }
     return new Error('Erro ao salvar registro.');
   } catch (error) {
+    console.log(chalk.red(error));
     return new Error('Erro ao salvar registro.');
   }
 };

@@ -1,5 +1,7 @@
-import * as Get from './signup';
+import * as userSignIn from './signin';
+import * as userSignUp from './signup';
 
-export const PlatformController = {
-  ...Get,
+export const UserController = {
+  ...userSignUp,
+  ...userSignIn,
 };

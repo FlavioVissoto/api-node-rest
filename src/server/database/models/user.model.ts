@@ -1,7 +1,7 @@
 export interface User {
   id: number;
-  name: string;
-  email: string;
-  pass: string;
-  status: number;
+  cd_status: number;
+  nm_user: string;
+  nm_email: string;
+  nm_pass: string;
 }

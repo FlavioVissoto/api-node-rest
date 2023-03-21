@@ -30,7 +30,7 @@ export const get = async (id: number): Promise<Platform | Error> => {
   try {
     const result = await Knex(TableName.platforma).select('*').where('id', '=', id).first();
     if (result) {
-      result;
+      return result;
     }
     return new Error(`Registro não encontrado para o código: ${id}`);
   } catch (error) {
