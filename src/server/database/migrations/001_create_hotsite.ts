@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Knex } from 'knex';
 import { TableName } from '../tablename';
 
@@ -14,12 +13,12 @@ export async function up(knex: Knex): Promise<void> {
       table.date('dt_info');
     })
     .then(() => {
-      console.log(chalk.green(`### Create table ${TableName.hotsite}`));
+      console.log(`### Create table ${TableName.hotsite}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.hotsite).then(() => {
-    console.log(chalk.yellow(`### Drop table ${TableName.hotsite}`));
+    console.log(`### Drop table ${TableName.hotsite}`);
   });
 }

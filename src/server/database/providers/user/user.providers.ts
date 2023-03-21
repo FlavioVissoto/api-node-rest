@@ -1,6 +1,7 @@
-import chalk from 'chalk';
+import { LogService } from '../../../shared/services';
 import { Knex } from '../../knex';
 import { TableName } from '../../tablename';
+import { PasswordCryto } from './../../../shared/services/password.crypto';
 import { User } from './../../models/user.model';
 
 export const getAll = async (): Promise<User[] | Error> => {
@@ -54,15 +55,21 @@ export const create = async (params: Omit<User, 'id'>): Promise<number | Error> 
       return new Error('E-mail já existente');
     }
 
+    params.nm_pass = await PasswordCryto.hashPassword(params.nm_pass);
+
     const [result] = await Knex(TableName.user).insert(params).returning('id');
+
     if (typeof result === 'object') {
       return result.id;
     } else if (typeof result === 'number') {
       return result;
     }
+
     return new Error('Erro ao salvar registro.');
-  } catch (error) {
-    console.log(chalk.red(error));
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError(err);
+    }
     return new Error('Erro ao salvar registro.');
   }
 };

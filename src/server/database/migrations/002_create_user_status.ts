@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Knex } from 'knex';
 import { TableName } from '../tablename';
 
@@ -10,12 +9,12 @@ export async function up(knex: Knex): Promise<void> {
       table.boolean('fl_enable').defaultTo(true).notNullable();
     })
     .then(() => {
-      console.log(chalk.green(`### Create table ${TableName.userstatus}`));
+      console.log(`### Create table ${TableName.userstatus}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.userstatus).then(() => {
-    console.log(chalk.yellow(`### Drop table ${TableName.userstatus}`));
+    console.log(`### Drop table ${TableName.userstatus}`);
   });
 }

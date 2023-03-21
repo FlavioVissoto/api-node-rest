@@ -42,7 +42,7 @@ export const remove = async (id: number): Promise<void | Error> => {
     if (status instanceof Error) {
       return new Error('Erro ao excluir registro.');
     } else {
-      status.enable = false;
+      status.fl_enable = false;
       return await update(status);
     }
   } catch (error) {

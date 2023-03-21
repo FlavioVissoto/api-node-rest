@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Knex } from 'knex';
 import { TableName } from '../tablename';
 
@@ -12,12 +11,12 @@ export async function up(knex: Knex): Promise<void> {
       table.string('nm_pass').notNullable().checkLength('>=', 6);
     })
     .then(() => {
-      console.log(chalk.green(`### Create table ${TableName.user}`));
+      console.log(`### Create table ${TableName.user}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.user).then(() => {
-    console.log(chalk.yellow(`### Drop table ${TableName.user}`));
+    console.log(`### Drop table ${TableName.user}`);
   });
 }

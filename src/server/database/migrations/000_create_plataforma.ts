@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Knex } from 'knex';
 import { TableName } from '../tablename';
 
@@ -9,12 +8,12 @@ export async function up(knex: Knex): Promise<void> {
       table.string('nm_platform', 150).checkLength('<=', 150).notNullable();
     })
     .then(() => {
-      console.log(chalk.green(`### Create table ${TableName.platforma}`));
+      console.log(`### Create table ${TableName.platforma}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.platforma).then(() => {
-    console.log(chalk.yellow(`### Drop table ${TableName.platforma}`));
+    console.log(`### Drop table ${TableName.platforma}`);
   });
 }

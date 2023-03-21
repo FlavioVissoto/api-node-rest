@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { User } from '../../database/models';
 import { UserProvider } from '../../database/providers/user';
 import { validation } from '../../shared/middleware';
+import { PasswordCryto } from './../../shared/services/password.crypto';
 
 interface BodyProps extends Omit<User, 'id' | 'cd_status' | 'nm_user'> {}
 
@@ -22,16 +23,24 @@ export const signIn = async (req: Request<{}, {}, BodyProps>, res: Response) => 
 
   const result = await UserProvider.getByEmail(nm_email);
 
-  if (result instanceof Error || (result && result.nm_pass != nm_pass)) {
+  if (result instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou senha são inválidos',
       },
     });
   } else {
-    res.status(StatusCodes.OK).json({
-      accessToken: 'token',
-    });
+    if (await PasswordCryto.verifyPassword(nm_pass, result.nm_pass)) {
+      res.status(StatusCodes.OK).json({
+        accessToken: 'token',
+      });
+    } else {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        errors: {
+          default: 'Email ou senha são inválidos',
+        },
+      });
+    }
   }
 
   return res.status(StatusCodes.CREATED).json(result);
