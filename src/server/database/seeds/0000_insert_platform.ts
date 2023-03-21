@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { LogService } from '../../shared/services';
 import { Platform } from '../models/platform.model';
 import { TableName } from '../tablename';
 

@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { LogService } from '../../shared/services';
 import { TableName } from '../tablename';
 
 export async function up(knex: Knex): Promise<void> {

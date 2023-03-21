@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { LogService } from '../../shared/services';
 import { UserStatus } from '../models';
 import { TableName } from '../tablename';
 
