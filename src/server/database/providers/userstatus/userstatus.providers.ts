@@ -1,3 +1,4 @@
+import { LogService } from '../../../shared/services';
 import { Knex } from '../../knex';
 import { UserStatus } from '../../models';
 import { TableName } from '../../tablename';
@@ -5,7 +6,16 @@ import { TableName } from '../../tablename';
 export const getAll = async (): Promise<UserStatus[] | Error> => {
   try {
     return await Knex(TableName.userstatus).select('*');
-  } catch (error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError({
+        method: getAll.name,
+        file: __dirname,
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      });
+    }
     return new Error('Erro ao consultar registro.');
   }
 };
@@ -17,7 +27,16 @@ export const get = async (id: number): Promise<UserStatus | Error> => {
       result;
     }
     return new Error(`Registro não encontrado para o código: ${id}`);
-  } catch (error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError({
+        method: get.name,
+        file: __dirname,
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      });
+    }
     return new Error('Erro ao consultar registro.');
   }
 };
@@ -31,7 +50,16 @@ export const create = async (params: Omit<UserStatus, 'id'>): Promise<number | E
       return result;
     }
     return new Error('Erro ao salvar registro.');
-  } catch (error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError({
+        method: create.name,
+        file: __dirname,
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      });
+    }
     return new Error('Erro ao salvar registro.');
   }
 };
@@ -45,7 +73,16 @@ export const remove = async (id: number): Promise<void | Error> => {
       status.fl_enable = false;
       return await update(status);
     }
-  } catch (error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError({
+        method: remove.name,
+        file: __dirname,
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      });
+    }
     return new Error('Erro ao excluir registro.');
   }
 };
@@ -57,7 +94,16 @@ export const update = async (params: UserStatus): Promise<void | Error> => {
       return;
     }
     return new Error('Erro ao atualizar registro.');
-  } catch (error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      LogService.writeError({
+        method: update.name,
+        file: __dirname,
+        message: err.message,
+        name: err.name,
+        stack: err.stack,
+      });
+    }
     return new Error('Erro ao atualizar registro.');
   }
 };

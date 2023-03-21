@@ -9,12 +9,12 @@ export async function up(knex: Knex): Promise<void> {
       table.boolean('fl_enable').defaultTo(true).notNullable();
     })
     .then(() => {
-      console.log(`### Create table ${TableName.userstatus}`);
+      LogService.logger.info(`### Create table ${TableName.userstatus}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.userstatus).then(() => {
-    console.log(`### Drop table ${TableName.userstatus}`);
+    LogService.logger.info(`### Drop table ${TableName.userstatus}`);
   });
 }

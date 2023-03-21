@@ -5,7 +5,7 @@ import { TableName } from '../tablename';
 export const seed = async (knex: Knex) => {
   const [{ count }] = await knex(TableName.userstatus).count<[{ count: number }]>('* as count');
   if (!Number.isInteger(count) || Number(count) > 0) {
-    console.log(`Existe(m) ${count} registro(s) na tabela ${TableName.userstatus}. Seed não executado!`);
+    LogService.logger.info(`Existe(m) ${count} registro(s) na tabela ${TableName.userstatus}. Seed não executado!`);
     return;
   }
 

@@ -20,7 +20,7 @@ export const validation: TValidation = (schemas: Partial<TValidationAllSchemas>)
   Object.entries(schemas).forEach(([key, schema]) => {
     try {
       schema.validateSync(req[key as TValidationType], { abortEarly: false });
-    } catch (error) {
+    } catch (error: unknown) {
       const yupError = error as ValidationError;
       const validationErrors: Record<string, string> = {};
       yupError.inner.forEach((x: ValidationError) => {

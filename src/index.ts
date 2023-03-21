@@ -20,11 +20,16 @@ if (process.env.IS_LOCALHOST !== 'true') {
           startServer();
         })
         .catch((e: Error) => {
-          LogService.writeError({ ...e, message: e.message + 'Erro ao rodar Seeds.' });
+          LogService.writeError({ ...e, message: e.message + 'Erro ao rodar Seeds.', method: 'InitServer', file: __dirname });
         });
     })
     .catch((e: Error) => {
-      LogService.writeError({ ...e, message: e.message + 'Erro ao rodar Migrations.' });
+      LogService.writeError({
+        ...e,
+        message: e.message + 'Erro ao rodar Migrations.',
+        method: 'InitServer',
+        file: __dirname,
+      });
     });
 } else {
   startServer();

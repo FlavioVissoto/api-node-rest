@@ -29,7 +29,7 @@ const colors = {
   debug: 'white',
 };
 
-const formatConfig = format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' });
+const formatConfig = format.combine(format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }), format.json());
 
 const transportsConfig = [
   new transports.Console({
@@ -65,8 +65,9 @@ const logger = createLogger({
   transports: transportsConfig,
 });
 
-const writeError = (err: Error) => {
-  const logMessage = `Name: ${err.name}\nMessage: ${err.message}\nStack: ${err.stack}`;
+const writeError = (err: LogError) => {
+  console.log(err);
+  const logMessage = `File: ${err.file} ### Method: ${err.method} ### Name: ${err.name} ### Message: ${err.message} ### Stack: ${err.stack}`;
   logger.error(logMessage);
 };
 
@@ -74,6 +75,15 @@ const write = (level: LevelLog, errName: string, errMessage: string, errStack: s
   const logMessage = `Name: ${errName}\nMessage: ${errMessage}\nStack: ${errStack}`;
   logger[level](logMessage);
 };
+
+export interface LogError {
+  file: string;
+  method: string;
+  name: string;
+  message: string;
+  stack?: string;
+  //[key: string]: string;
+}
 
 export const LogService = {
   logger,

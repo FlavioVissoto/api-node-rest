@@ -2,7 +2,7 @@ import morgan, { StreamOptions } from 'morgan';
 
 import { LogService } from '../services';
 
-// Substitua o método stream dizendo a Morgan para usar nosso registrador personalizado em vez do console.log
+// Substitua o método stream dizendo a Morgan para usar nosso registrador personalizado em vez do LogService.logger.info
 const stream: StreamOptions = {
   write: (message: string) => LogService.logger.http(message),
 };

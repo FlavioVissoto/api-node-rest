@@ -7,7 +7,7 @@ export const seed = async (knex: Knex) => {
 
   const [{ count }] = await knex(TableName.platforma).count<[{ count: number }]>('* as count');
   if (!Number.isInteger(count) || Number(count) > 0) {
-    console.log(`Existe(m) ${count} registro(s) na tabela ${TableName.platforma}. Seed não executado!`);
+    LogService.logger.info(`Existe(m) ${count} registro(s) na tabela ${TableName.platforma}. Seed não executado!`);
     return;
   }
 

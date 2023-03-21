@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import { LogService } from '../../shared/services';
 import { TableName } from '../tablename';
 
 export async function up(knex: Knex): Promise<void> {
@@ -13,12 +14,12 @@ export async function up(knex: Knex): Promise<void> {
       table.date('dt_info');
     })
     .then(() => {
-      console.log(`### Create table ${TableName.hotsite}`);
+      LogService.logger.info(`### Create table ${TableName.hotsite}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.hotsite).then(() => {
-    console.log(`### Drop table ${TableName.hotsite}`);
+    LogService.logger.info(`### Drop table ${TableName.hotsite}`);
   });
 }

@@ -11,12 +11,12 @@ export async function up(knex: Knex): Promise<void> {
       table.string('nm_pass').notNullable().checkLength('>=', 6);
     })
     .then(() => {
-      console.log(`### Create table ${TableName.user}`);
+      LogService.logger.info(`### Create table ${TableName.user}`);
     });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable(TableName.user).then(() => {
-    console.log(`### Drop table ${TableName.user}`);
+    LogService.logger.info(`### Drop table ${TableName.user}`);
   });
 }
