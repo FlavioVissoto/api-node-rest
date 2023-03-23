@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { object, ObjectSchema, string } from 'yup';
+import { HTTP, JWT } from '../../constants';
 
 import { StatusCodes } from 'http-status-codes';
 import { User } from '../../database/models';
 import { UserProvider } from '../../database/providers/user';
 import { validation } from '../../shared/middleware';
+import { JWTServices } from '../../shared/services';
 import { PasswordCryto } from './../../shared/services/password.crypto';
 
 interface BodyProps extends Omit<User, 'id' | 'cd_status' | 'nm_user'> {}
@@ -21,27 +23,33 @@ export const getAllValidationSignIn = validation({
 export const signIn = async (req: Request<{}, {}, BodyProps>, res: Response) => {
   const { nm_email, nm_pass } = req.body;
 
-  const result = await UserProvider.getByEmail(nm_email);
+  const user = await UserProvider.getByEmail(nm_email);
 
-  if (result instanceof Error) {
+  if (user instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
-        default: 'Email ou senha são inválidos',
+        default: HTTP.ERROR_EMAIL_PASS_INVALID,
       },
     });
   } else {
-    if (await PasswordCryto.verifyPassword(nm_pass, result.nm_pass)) {
-      res.status(StatusCodes.OK).json({
-        accessToken: 'token',
-      });
+    if (await PasswordCryto.verifyPassword(nm_pass, user.nm_pass)) {
+      const acessToken = JWTServices.sign({ email: user.nm_email, uid: user.id });
+
+      if (acessToken === JWT.JWT_SECRET_NOT_FOUND || acessToken === JWT.JWT_EXPIRES_TIME_FOUND) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          errors: {
+            default: HTTP.ERROR_GENERATE_TOKEN,
+          },
+        });
+      }
+
+      return res.status(StatusCodes.OK).json(acessToken);
     } else {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         errors: {
-          default: 'Email ou senha são inválidos',
+          default: HTTP.ERROR_EMAIL_PASS_INVALID,
         },
       });
     }
   }
-
-  return res.status(StatusCodes.CREATED).json(result);
 };

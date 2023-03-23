@@ -18,5 +18,13 @@ export const GetValidation = validation({
 
 export const Get = async (req: Request<{}, {}, {}, HotsiteRequest>, res: Response) => {
   const result = await HotsiteServices.getHotsite(req.query);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  }
   return res.status(StatusCodes.OK).json(result);
 };
