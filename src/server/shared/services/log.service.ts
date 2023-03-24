@@ -15,8 +15,8 @@ const levels = {
 // Mostra todos os níveis de log se o servidor foi executado em dev;
 // caso contrário, se foi executado em produção, mostra apenas mensagens de 'warning' e 'error'.
 const level = () => {
-  const env = process.env.NODE_ENV || 'dev';
-  const isDevelopment = env === 'dev';
+  const env = process.env.NODE_ENV || 'development';
+  const isDevelopment = env === 'development';
   return isDevelopment ? 'debug' : 'warn';
 };
 

@@ -12,7 +12,7 @@
     "postinstall": "tsc",
     "production": "node ./dist/index.js",
     "knex:migrate": "knex --knexfile ./src/server/database/knex/environment.ts migrate:latest",
-    "knex:rollback": "knex --knexfile ./src/server/database/knex/environment.ts migrate:rollback",
+    "knex:rollback": "knex --knexfile ./src/server/database/knex/environment.ts migrate:rollback --env production",
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/environment.ts migrate:rollback --all",
     "knex:seed": "knex --knexfile ./src/server/database/knex/environment.ts seed:run"
   },

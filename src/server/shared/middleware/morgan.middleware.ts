@@ -10,7 +10,7 @@ const stream: StreamOptions = {
 // Ignora todo o log http do Morgan se o aplicativo não estiver sendo executado no modo de desenvolvimento.
 // Este método não é realmente necessário aqui, pois já informamos ao logger que ele deve imprimir apenas mensagens de 'warning' e 'error' em produção.
 const skip = () => {
-  const env = process.env.NODE_ENV || 'dev';
+  const env = process.env.NODE_ENV || 'development';
   return env !== 'dev';
 };
 

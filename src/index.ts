@@ -10,7 +10,9 @@ const startServer = () => {
   });
 };
 
-if (process.env.IS_LOCALHOST !== 'true') {
+if (process.env.NODE_ENV === 'development') {
+  startServer();
+} else {
   Knex.migrate
     .latest()
     .then(() => {
@@ -31,6 +33,4 @@ if (process.env.IS_LOCALHOST !== 'true') {
         file: __dirname,
       });
     });
-} else {
-  startServer();
 }
